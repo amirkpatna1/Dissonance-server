@@ -2,44 +2,45 @@ import mongoose from 'mongoose';
 
 const userSchema = new mongoose.Schema({
   name: String,
-  email: String,
+  mobile: String,
   password: String,
+  lastSeen: String,
   verified: Boolean,
   roles: Array,
 });
 
 const User = mongoose.model('User', userSchema);
 
-const fabricationSchema = new mongoose.Schema({
-  item: String,
-  itemId: String,
-  rawMaterial: String,
-  quantity: String,
-  startDate: Date,
-  endDate: Date,
+const roomSchema = new mongoose.Schema({
+  name: String,
+  photoUrl: String,
+  createdOn: Date,
+  admins: Array,
+  users: Array,
+  isGroup: Boolean,
 });
 
-const Fabrication = mongoose.model('Fabrication', fabricationSchema);
+const Room = mongoose.model('Room', roomSchema);
 
-const subAssemblySchema = new mongoose.Schema({
-  assemblyId: String,
-  process: String,
-  itemId: String,
-  machineId: String,
-  startDate: Date,
-  endDate: Date,
+const messageSchema = new mongoose.Schema({
+  message: String,
+  createdOn: Date,
+  senderId: Object,
+  senderName: String,
+  roomId: Object,
+  isLastMessage: Boolean,
+  status: String,
 });
 
-const SubAssembly = mongoose.model('SubAssembly', subAssemblySchema);
-
-const assemblySchema = new mongoose.Schema({
-  process: String,
-  processId: String,
-  machineId: String,
-  startDate: Date,
-  endDate: Date,
+const messageSeenBySchema = new mongoose.Schema({
+  messageId: Object,
+  receiverId: Object,
+  roomId: Object,
+  seen: Boolean,
 });
 
-const Assembly = mongoose.model('Assembly', assemblySchema);
+const MessageSeen = mongoose.model('MessageSeen', messageSeenBySchema);
 
-export { User, Fabrication, SubAssembly, Assembly };
+const Message = mongoose.model('Message', messageSchema);
+
+export { User, Room, Message, MessageSeen };
