@@ -13,7 +13,6 @@ const authentication = async (req, res, next) => {
       return;
     }
     req.user = user;
-    console.log(user);
     next();
   });
 };

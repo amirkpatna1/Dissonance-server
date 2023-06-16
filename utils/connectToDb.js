@@ -7,6 +7,7 @@ class ConnectToDB {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });
+    mongoose.set('strictQuery', false);
 
     const db = mongoose.connection;
 
