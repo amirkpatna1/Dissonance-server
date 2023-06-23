@@ -86,9 +86,9 @@ router.post('/', authentication, async (req, res) => {
       currentRoomMembers.users.forEach((userId) => {
         if (userId != senderId) {
           messageInfo.push({
-            messageId: messageObject[0]._id,
+            messageId: messageObject[0]._id.toString(),
             receiverId: userId,
-            roomId: currentRoomMembers._id,
+            roomId: currentRoomMembers._id.toString(),
             seen: false,
           });
         }
