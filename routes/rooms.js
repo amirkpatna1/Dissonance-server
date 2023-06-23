@@ -163,6 +163,7 @@ router.post('/', authentication, async (req, res) => {
     }
     if (!isGroup) {
       const currRoom = await Room.findOne({
+        isGroup,
         users: {
           $all: [_id, currUser._id.toString()],
         },
