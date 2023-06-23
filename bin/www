@@ -93,6 +93,14 @@ io.on('connection', (socket) => {
     });
   });
 
+  socket.on('pingBackForAck', ({ senderId, receiverId }) => {
+    socket.in(senderId).emit('pingAck', { senderId, receiverId });
+  });
+
+  socket.on('pingForOnlineStatus', ({ senderId, receiverId }) => {
+    socket.in(receiverId).emit('pingForAck', { senderId, receiverId });
+  });
+
   socket.off('setup', () => {
     socket.leave(userData._id);
   });
