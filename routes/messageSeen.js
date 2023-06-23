@@ -16,7 +16,7 @@ router.patch('/', authentication, async (req, res) => {
   }
   try {
     const updatedMessage = await MessageSeen.updateMany(
-      { roomId, receiverId, seen: { $ne: true } },
+      { roomId: ObjectId(roomId), receiverId, seen: { $ne: true } },
       { $set: { seen: true } }
     );
     res.status(200).json({ updatedMessage });
