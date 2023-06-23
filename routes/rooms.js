@@ -56,6 +56,7 @@ router.get('/:id', authentication, async (req, res) => {
         admins: rooms[i].admins,
         users: rooms[i].users,
         lastMessage: temp || {},
+        isGroup: rooms[i].isGroup,
         notSeenCount,
         receiverName,
       };
