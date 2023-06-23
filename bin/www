@@ -101,6 +101,10 @@ io.on('connection', (socket) => {
     socket.in(receiverId).emit('pingForAck', { senderId, receiverId });
   });
 
+  socket.on('updateMessagesAsSeen', ({ roomId }) => {
+    socket.in(roomId).emit('updateUnreadMessagesAsSeen', { roomId });
+  });
+
   socket.off('setup', () => {
     socket.leave(userData._id);
   });
