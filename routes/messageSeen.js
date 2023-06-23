@@ -27,9 +27,13 @@ router.patch('/', authentication, async (req, res) => {
 
 router.patch('/:id', authentication, async (req, res) => {
   const { id } = req.params;
+  const { receiverId } = req.body;
+  if (!receiverId) {
+    return res.status(400).json({ message: 'missing required fields' });
+  }
   try {
     const updatedMessage = await MessageSeen.updateOne(
-      { messageId: ObjectId(id) },
+      { messageId: ObjectId(id), receiverId },
       { $set: { seen: true } }
     );
     res.status(200).json({ updatedMessage });
