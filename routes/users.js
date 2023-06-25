@@ -34,9 +34,9 @@ router.post('/', async (req, res) => {
       password: hashPassword,
       verified: false,
       lastSeen: moment().format(),
-      photoUrl: req.body.photoUrl,
+      photoUrl: req.body.photoUrl || '',
     };
-    if (!(user.name && user.mobile && user.password && user.photoUrl)) {
+    if (!(user.name && user.mobile && user.password)) {
       res.status(400).json({ message: 'Fields missing' });
       return;
     }
