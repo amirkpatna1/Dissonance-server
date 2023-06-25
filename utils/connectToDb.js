@@ -3,11 +3,11 @@ require('dotenv').config();
 
 class ConnectToDB {
   connect = () => {
+    mongoose.set('strictQuery', false);
     mongoose.connect(process.env.DB_URL, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });
-    mongoose.set('strictQuery', false);
 
     const db = mongoose.connection;
 
