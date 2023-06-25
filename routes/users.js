@@ -13,7 +13,7 @@ router.get('/:id', authentication, async (req, res) => {
   try {
     const user = await User.findOne(
       { _id: ObjectId(id) },
-      { _id: 1, name: 1, mobile: 1, lastSeen: 1 }
+      { _id: 1, name: 1, mobile: 1, lastSeen: 1, photoUrl: 1 }
     );
     if (!user) {
       res.status(400).json({ message: 'User Not Found' });
@@ -34,8 +34,9 @@ router.post('/', async (req, res) => {
       password: hashPassword,
       verified: false,
       lastSeen: moment().format(),
+      photoUrl: req.body.photoUrl,
     };
-    if (!(user.name && user.mobile && user.password)) {
+    if (!(user.name && user.mobile && user.password && user.photoUrl)) {
       res.status(400).json({ message: 'Fields missing' });
       return;
     }

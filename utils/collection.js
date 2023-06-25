@@ -7,6 +7,7 @@ const userSchema = new mongoose.Schema({
   lastSeen: String,
   verified: Boolean,
   roles: Array,
+  photoUrl: String,
 });
 
 const User = mongoose.model('User', userSchema);
