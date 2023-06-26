@@ -61,6 +61,20 @@ router.post('/', async (req, res) => {
   }
 });
 
+router.patch('/:id', async (req, res) => {
+  const { id } = req.params;
+  const { name, photoUrl, status } = req.body;
+  const user = await User.findOne({ _id: ObjectId(id) });
+  if (!user) {
+    return res.status(400).json({ message: 'User Not Found' });
+  }
+  const updatedUser = await User.updateOne(
+    { _id: ObjectId(id) },
+    { $set: { name, photoUrl, status } }
+  );
+  return res.status(201).json({ message: 'update successful' });
+});
+
 router.post('/login', async (req, res) => {
   if (!(req.body.mobile && req.body.password)) {
     res.status(400).json({ message: 'missing required fields' });
@@ -82,6 +96,7 @@ router.post('/login', async (req, res) => {
         roles: userFound.roles,
         _id: userFound._id,
         name: userFound.name,
+        photoUrl: userFound.photoUrl || '',
       };
       const accessToken = jwt.sign(user, process.env.SECRET_TOKEN);
       res.status(201).json({ message: 'Successfully logged in', accessToken });
