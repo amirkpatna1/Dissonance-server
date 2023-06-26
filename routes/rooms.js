@@ -31,6 +31,7 @@ router.get('/:id', authentication, async (req, res) => {
       }
       let notSeenCount = 0;
       let receiverName = 'Amir';
+      let photoUrl = rooms[i].photoUrl;
       if (rooms[i].isGroup) {
         notSeenCount = await MessageSeen.find({
           roomId: rooms[i]._id.toString(),
@@ -43,6 +44,12 @@ router.get('/:id', authentication, async (req, res) => {
           senderId: { $ne: id },
           status: { $ne: 'seen' },
         }).count();
+        const currUserId =
+          rooms[i].users[0] === id ? rooms[i].users[1] : rooms[i].users[0];
+        ({ photoUrl } = await User.findOne(
+          { _id: ObjectId(currUserId) },
+          { photoUrl: 1 }
+        ));
         const receiverId =
           rooms[i].users[0] === id ? rooms[i].users[1] : rooms[i].users[0];
         const receiver = await User.findOne({ _id: ObjectId(receiverId) });
@@ -51,7 +58,7 @@ router.get('/:id', authentication, async (req, res) => {
       const obj = {
         _id: rooms[i]._id,
         name: rooms[i].name,
-        photoUrl: rooms[i].photoUrl,
+        photoUrl,
         createdOn: rooms[i].createdOn,
         admins: rooms[i].admins,
         users: rooms[i].users,
